@@ -14,17 +14,28 @@ public class CommandProcessor {
 		try {
 			command = ValidCommand.valueOf(commands[0]);
 		} catch (IllegalArgumentException exp) {
-			System.out.println("Invalid command, please enter correct command");
+			System.err.println("Invalid command, please enter correct command");
 			throw exp;
 		}
 		int x = 0;
 		int y = 0;
 		Direction direction = null;
 		if (command == ValidCommand.PLACE) {
-			String[] parameters = commands[1].split(",");
-			x = Integer.parseInt(parameters[0]);
-			y = Integer.parseInt(parameters[1]);
-			direction = Direction.valueOf(parameters[2]);
+			if (commands.length > 1) {
+				String[] parameters = commands[1].split(",");
+				if(parameters.length<3)
+				{
+					throw new IllegalArgumentException("Wrong parameters provided for PLACE command"); 
+				}
+				x = Integer.parseInt(parameters[0]);
+				y = Integer.parseInt(parameters[1]);
+				direction = Direction.valueOf(parameters[2]);
+			}
+			else
+			{
+				System.err.println("No  parameters provided with PLACE command");
+				throw new IllegalArgumentException("No  parameters provided with PLACE command");
+			}
 		}
 
 		switch (command) {
@@ -45,7 +56,7 @@ public class CommandProcessor {
 			break;
 		}
 	}
-	
+
 	public ToyRobot getRobot() {
 		return robot;
 	}

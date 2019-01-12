@@ -36,6 +36,26 @@ public class CommandProcessorTest {
 	}
 
 	@Test
+	public void testPlaceWithNoArguments() 
+	{
+		String cmd = "PLACE";
+		initializeRobotPosition(new Position(0, 0), Direction.NORTH);
+		exception.expect(IllegalArgumentException.class);
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "0, 0, NORTH");
+	}
+	
+	@Test
+	public void testPlaceWithWrongArguments() 
+	{
+		String cmd = "PLACE 2";
+		initializeRobotPosition(new Position(0, 0), Direction.NORTH);
+		exception.expect(IllegalArgumentException.class);
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "1, 0, NORTH");
+	}
+	
+	@Test
 	public void testMoveWithoutPlace() {
 
 		String cmd = "MOVE";
@@ -52,6 +72,24 @@ public class CommandProcessorTest {
 		cmd = "MOVE";
 		processor.processCommand(cmd);
 		assertEquals(processor.getRobot().report(), "2, 4, NORTH");
+		
+		cmd = "PLACE 2,3,SOUTH";
+		processor.processCommand(cmd);
+		cmd = "MOVE";
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "2, 2, SOUTH");
+		
+		cmd = "PLACE 2,3,WEST";
+		processor.processCommand(cmd);
+		cmd = "MOVE";
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "1, 3, WEST");
+		
+		cmd = "PLACE 2,3,EAST";
+		processor.processCommand(cmd);
+		cmd = "MOVE";
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "3, 3, EAST");
 	}
 	
 	@Test
@@ -65,7 +103,7 @@ public class CommandProcessorTest {
 	}
 	
 	@Test
-	public void testPlaceMoveWithInvalidRange() 
+	public void testPlaceWithInvalidRange() 
 	{
 		String cmd = "PLACE 4,5,NORTH";
 		//initializeRobotPosition(new Position(0, 0), Direction.NORTH);
@@ -104,7 +142,17 @@ public class CommandProcessorTest {
 		cmd = "MOVE";
 		processor.processCommand(cmd);
 		cmd = "LEFT";
+		processor.processCommand(cmd);
 		assertEquals(processor.getRobot().report(), "3, 3, WEST");
+	}
+	
+	@Test
+	public void testReportWithValidCommand() {
+		String cmd = "PLACE 2,3,NORTH";
+		processor.processCommand(cmd);
+		cmd = "REPORT";
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "2, 3, NORTH");
 	}
 
 	private void initializeRobotPosition(Position position, Direction direction) {
