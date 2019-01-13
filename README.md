@@ -75,3 +75,15 @@ Expected output
 
 ![Code Coverage](https://github.com/mcaashish/toy-robot/blob/master/Toy_Robot_Code_Coverage.JPG)
 
+## Build package and Execute steps
+
+```
+# Build package
+mvn package
+
+# Run tests
+mvn test
+
+# Execute jar
+java -jar target\robot-0.0.1-SNAPSHOT.jar
+```
