@@ -70,3 +70,8 @@ Expected output:
 Expected output
 
     3,3,NORTH
+    
+## Total Code coverage
+
+![Code Coverage](https://github.com/mcaashish/toy-robot/blob/master/Toy_Robot_Code_Coverage.JPG)
+
