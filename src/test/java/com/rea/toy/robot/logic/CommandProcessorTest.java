@@ -93,13 +93,23 @@ public class CommandProcessorTest {
 	}
 	
 	@Test
-	public void testMoveWithInvalidRange() 
+	public void testMoveWithInvalidRangeNorth() 
 	{
 		String cmd = "PLACE 2,4,NORTH";
 		processor.processCommand(cmd);
 		cmd = "MOVE";
 		processor.processCommand(cmd);
 		assertEquals(processor.getRobot().report(), "2, 4, NORTH");
+	}
+	
+	@Test
+	public void testMoveWithInvalidRangeEast() 
+	{
+		String cmd = "PLACE 4,3,EAST";
+		processor.processCommand(cmd);
+		cmd = "MOVE";
+		processor.processCommand(cmd);
+		assertEquals(processor.getRobot().report(), "4, 3, EAST");
 	}
 	
 	@Test

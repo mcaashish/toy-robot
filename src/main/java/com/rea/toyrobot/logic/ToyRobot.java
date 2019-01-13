@@ -4,23 +4,35 @@ import com.rea.toyrobot.model.Direction;
 import com.rea.toyrobot.model.Position;
 
 public class ToyRobot {
-
+	private static final int MIN_Y_LIMIT = 0;
+	private static final int MIN_X_LIMIT = 0;
+	private static final int MAX_Y_LIMIT = 4;
+	private static final int MAX_X_LIMIT = 4;
 	private Direction direction;
 	private Position position = new Position(0, 0);
 	private boolean placed;
 
 	public void placeRobot(Position newPosition, Direction newDirection) {
-		if (newPosition.getX() < 0 || newPosition.getX() > 4) {
-			System.err.println("Invalid X position, please enter in range of 0 to 4");
+		if (isValidPosition(newPosition)) {
+
+			this.position = newPosition;
+			this.direction = newDirection;
+			placed = true;
+		} else {
+			System.err.println("Invalid position");
 			return;
 		}
-		if (newPosition.getY() < 0 || newPosition.getY() > 4) {
-			System.err.println("Invalid Y position, please enter in range of 0 to 4");
-			return;
+	}
+
+	private boolean isValidPosition(Position position) {
+		if (position.getX() < MIN_X_LIMIT || position.getX() > MAX_X_LIMIT) {
+			return false;
 		}
-		this.position = newPosition;
-		this.direction = newDirection;
-		placed = true;
+
+		if (position.getY() < MIN_Y_LIMIT || position.getY() > MAX_Y_LIMIT) {
+			return false;
+		}
+		return true;
 	}
 
 	public String report() {
@@ -45,16 +57,12 @@ public class ToyRobot {
 				break;
 
 			}
-			if (nextPosition.getX() < 0 || nextPosition.getX() > 4) {
-				System.err.println("Invalid X position, please enter in range of 0 to 4");
+			if (isValidPosition(nextPosition)) {
+				setPosition(nextPosition);
+			} else {
+				System.err.println("Invalid position");
 				return;
 			}
-			if (nextPosition.getY() < 0 || nextPosition.getY() > 4) {
-				System.err.println("Invalid Y position, please enter in range of 0 to 4");
-				return;
-			}
-
-			setPosition(nextPosition);
 		} else {
 			System.err.println("Robot not yet placed");
 		}
