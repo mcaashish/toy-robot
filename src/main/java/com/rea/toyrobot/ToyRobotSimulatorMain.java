@@ -3,6 +3,9 @@ package com.rea.toyrobot;
 import java.util.Scanner;
 
 import com.rea.toyrobot.logic.CommandProcessor;
+/*
+ * 
+ */
 
 public class ToyRobotSimulatorMain 
 {
